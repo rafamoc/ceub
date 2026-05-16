@@ -1,5 +1,5 @@
 # Caminho base onde estão as pastas dos alunos
-$basePath = "entrega03"
+$basePath = "Entrega03"
 
 # Pega todas as pastas dentro do caminho base
 $folders = Get-ChildItem -Path $basePath -Directory
@@ -11,7 +11,7 @@ foreach ($folder in $folders) {
 
     # Encontra arquivos ZIP ou RAR dentro da pasta
     $compressedFiles = Get-ChildItem -Path $folder.FullName -File | Where-Object {
-        $_.Extension -in ".zip", ".rar", ".tar", ".gz"
+        $_.Extension -in ".zip", ".rar", ".tar", ".gz", ".7z"
     }
 
     foreach ($file in $compressedFiles) {

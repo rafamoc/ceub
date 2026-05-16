@@ -1,5 +1,5 @@
 # Caminho base onde estão as pastas dos alunos
-$basePath = "entrega02"
+$basePath = "Entrega02"
 
 # Função para normalizar o nome do arquivo
 function Normalize-FileName {

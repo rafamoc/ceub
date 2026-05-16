@@ -1,5 +1,5 @@
 # Caminho base onde estão as pastas dos alunos
-$basePath = "entrega02"
+$basePath = "Entrega02"
 
 # Pega todas as pastas dentro do caminho base
 $folders = Get-ChildItem -Path $basePath -Directory

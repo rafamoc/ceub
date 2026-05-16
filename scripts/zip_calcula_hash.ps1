@@ -6,7 +6,7 @@ $outputFile = "entrega03/_enviados/saida_hashes.txt"
 
 # Calcula os hashes de ZIP e RAR, ordena e grava no TXT
 Get-ChildItem -Path $folder -File |
-Where-Object { $_.Extension -in ".zip", ".rar", ".tar", ".gz" } |
+Where-Object { $_.Extension -in ".zip", ".rar", ".tar", ".gz" , ".7z"} |
 ForEach-Object {
     $hash = Get-FileHash $_.FullName -Algorithm SHA256
     [PSCustomObject]@{
