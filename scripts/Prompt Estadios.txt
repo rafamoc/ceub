@@ -1,0 +1,58 @@
+Este é um guia de diretrizes técnicas detalhado para a implementação da camada de persistência e modelo de dados do aplicativo Copa 2026. O objetivo deste documento é orientar o desenvolvimento de uma estrutura robusta, desacoplada e escalável, utilizando o banco de dados SQLite nativo do Android.
+Siga rigorosamente as instruções abaixo para garantir que a arquitetura do software esteja em conformidade com as melhores práticas de desenvolvimento mobile.
+1. Definição do Escopo e Arquitetura de Pacotes
+O projeto deve ser organizado sob o namespace (package) base br.uniceub.ads.pdm.app_copa2026. Para manter a organização, você deve criar as seguintes subdivisões de pacotes:
+.database: Onde residirá a classe de conexão física com o banco de dados.
+.pojo: Onde residirão os objetos de transferência de dados (Plain Old Java Objects).
+.model: Onde residirá a lógica de acesso a dados (DAOs - Data Access Objects).
+.utilitarios: Onde residirão as definições de domínio e códigos de negócio (Enums).
+2. Definição do Domínio de Negócio (Enumerações)
+Uma falha comum em sistemas de banco de dados é depender exclusivamente de Chaves Primárias (ID AUTOINCREMENT) para lógica de código Java, uma vez que esses IDs podem mudar se o banco for recriado ou se a ordem de inserção for alterada.
+Para mitigar este risco, você deve criar uma classe estática chamada Codificacoes dentro do pacote .utilitarios. Dentro dela, implemente uma enum chamada CodigoEstadios. Cada estádio da Copa de 2026 deve possuir um código fixo (de 1 a 15).
+Regra de Ordenação da Enum:
+Códigos 1 a 10: Estádios localizados nos EUA.
+Códigos 11 e 12: Estádios localizados no Canadá.
+Códigos 13 a 15: Estádios localizados no México.
+Esta enumeração será utilizada para realizar buscas no banco de dados de forma segura, garantindo que o "Estádio Azteca" seja sempre referenciado pelo código de negócio, independentemente do seu ID incremental no SQLite.
+3. O Objeto de Transferência (EstadioPojo)
+No pacote .pojo, crie a classe EstadioPojo. Esta classe deve implementar Serializable para permitir o tráfego de dados entre Activities. O modelo de dados deve refletir exatamente as necessidades da aplicação, contendo:
+id: Inteiro (Chave primária do banco).
+codigoEstadioEnum: Inteiro (O código fixo definido na sua Enum).
+nome: Texto (Not Null).
+local: Texto (Not Null).
+descricao: Texto (Permite nulo).
+dataFundacao: Texto (Formato ISO para datas).
+capacidade: Inteiro (Capacidade de público).
+imagem: Texto (Nome do recurso drawable - Not Null).
+linkMaps: Texto (URL para localização).
+A classe deve conter um construtor vazio padrão e todos os métodos Getters e Setters.
+4. Implementação do Banco de Dados (ConexaoSqlite)
+No pacote .database, crie a classe ConexaoSqlite estendendo SQLiteOpenHelper. Esta classe será a responsável pela criação física do arquivo .db no dispositivo.
+A. Estrutura das Tabelas
+Você deve implementar quatro tabelas fundamentais:
+Estadios: Deve conter todas as colunas listadas no POJO. Garanta que nome, local, codigo_estadio_enum e imagem sejam NOT NULL.
+Selecao: Campos id e pais.
+Partida: Campos id, id_selecao_1, gols_selecao1, id_selecao2, gols_selecao2. Implemente chaves estrangeiras vinculadas à tabela Selecao.
+Partida_Estadio: Tabela de relacionamento contendo id, id_partida, id_estadio e data. Implemente chaves estrangeiras.
+B. Integridade Referencial
+No método onConfigure, ative obrigatoriamente as restrições de chave estrangeira (setForeignKeyConstraintsEnabled(true)), garantindo que não existam partidas órfãs ou estádios inexistentes em um evento.
+C. Carga Inicial de Dados (Seeding)
+O método onCreate deve, além de criar as tabelas, invocar um método privado para popular o banco inicialmente. Você deve inserir as seleções principais (Brasil, EUA, Canadá, México) e, obrigatoriamente, os 15 estádios oficiais da Copa 2026.
+Regras para as Imagens: As imagens não devem ser salvas como bytes ou Base64 por questões de performance. Elas devem ser referenciadas pelo nome do recurso dentro da pasta res/drawable. Os nomes de arquivos devem seguir este padrão exato:
+Canada: estadio1_toronto, estadio2_vancouver.
+Mexico: estadio3_cidadedelmexico, estadio4_guadalajara, estadio5_monterrey.
+EUA: estadio6_atlanta, estadio7_boston, estadio8_dallas, estadio9_houston, estadio10_kansas, estadio11_miami, estadio12_novayork, estadio13_filadelfia, estadio14_sanfrancisco, estadio15_seattle.
+Nota: No momento da inserção SQL, utilize o escape de aspas simples (duas aspas simples) para nomes como "Levi's Stadium" para evitar erros de sintaxe.
+5. A Camada de Acesso a Dados (EstadioModel)
+No pacote .model, crie a classe EstadioModel. Esta classe deve abstrair a complexidade do SQL para o restante da aplicação. Ela receberá um Context em seu construtor para inicializar a ConexaoSqlite.
+Implemente as seguintes funcionalidades obrigatórias:
+getEstadioByCodigo(CodigoEstadios codigo): Este é o método principal. Ele deve receber a constante da sua Enum, realizar um SELECT filtrando pela coluna codigo_estadio_enum e retornar um objeto EstadioPojo devidamente preenchido.
+listarTodos(): Deve retornar uma List<EstadioPojo> contendo todos os estádios ordenados alfabeticamente por nome.
+Metodo Auxiliar de Mapeamento: Crie um método privado para converter um Cursor do SQLite em um objeto EstadioPojo. Isso evita repetição de código (DRY - Don't Repeat Yourself) entre os métodos de busca.
+6. Considerações sobre Ciclo de Vida e Recursos
+Sempre feche os objetos Cursor e SQLiteDatabase após a utilização para evitar vazamentos de memória (Memory Leaks).
+Ao recuperar a String de imagem do banco, utilize o método getResources().getIdentifier() para converter o nome do arquivo em um ID de recurso inteiro que possa ser usado em imageView.setImageResource().
+Lembre-se: em ambiente Android, nomes de recursos na pasta drawable não podem conter letras maiúsculas ou caracteres especiais. Certifique-se de que sua carga inicial de dados respeite essa regra.
+7. Resultado Esperado
+Ao final deste trabalho, o aluno terá construído uma camada de dados onde, para exibir as informações de um estádio, bastará chamar: EstadioPojo estadio = new EstadioModel(context).getEstadioByCodigo(Codificacoes.CodigoEstadios.DALLAS);
+Este nível de abstração garante que, se no futuro o banco de dados mudar de SQLite para uma API externa ou Realm, a camada de UI (Activities) não precisará sofrer alterações drásticas, pois ela depende apenas do EstadioPojo e dos códigos da Enum.

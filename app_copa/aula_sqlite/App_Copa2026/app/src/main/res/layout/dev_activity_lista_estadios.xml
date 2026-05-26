@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Controle Interno: Estádios Copa 2026"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="24dp" />
+
+        <!-- ESTÁDIOS EUA -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="EUA"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+
+        <Button
+            android:id="@+id/btn_dev_atlanta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Atlanta - Mercedes-Benz Stadium" />
+
+        <Button
+            android:id="@+id/btn_dev_boston"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Boston - Gillette Stadium" />
+
+        <Button
+            android:id="@+id/btn_dev_dallas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dallas - AT&amp;T Stadium" />
+
+        <Button
+            android:id="@+id/btn_dev_houston"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Houston - NRG Stadium" />
+
+        <Button
+            android:id="@+id/btn_dev_kansas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kansas City - Arrowhead Stadium" />
+
+        <Button
+            android:id="@+id/btn_dev_miami"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Miami - Hard Rock Stadium" />
+
+        <Button
+            android:id="@+id/btn_dev_novayork"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nova York - MetLife Stadium" />
+
+        <Button
+            android:id="@+id/btn_dev_filadelfia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Filadélfia - Lincoln Financial Field" />
+
+        <Button
+            android:id="@+id/btn_dev_sanfrancisco"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="San Francisco - Levi's Stadium" />
+
+        <Button
+            android:id="@+id/btn_dev_seattle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Seattle - Lumen Field"
+            android:layout_marginBottom="24dp" />
+
+        <!-- ESTÁDIOS CANADÁ -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CANADÁ"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+
+        <Button
+            android:id="@+id/btn_dev_toronto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Toronto - BMO Field" />
+
+        <Button
+            android:id="@+id/btn_dev_vancouver"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Vancouver - BC Place"
+            android:layout_marginBottom="24dp" />
+
+        <!-- ESTÁDIOS MÉXICO -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="MÉXICO"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+
+        <Button
+            android:id="@+id/btn_dev_cidademexico"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cidade do México - Estádio Azteca" />
+
+        <Button
+            android:id="@+id/btn_dev_guadalajara"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Guadalajara - Estádio Akron" />
+
+        <Button
+            android:id="@+id/btn_dev_monterrey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Monterrey - Estádio BBVA"
+            android:layout_marginBottom="32dp" />
+
+    </LinearLayout>
+</ScrollView>

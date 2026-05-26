@@ -1,8 +1,8 @@
 # Pasta onde estão os PDFs
-$folder = "entrega02/_enviados/"
+$folder = "Entrega01/_enviados/"
 
 # Arquivo de saída
-$outputFile = "entrega02/_enviados/saida_hashes.txt"
+$outputFile = "Entrega01/_enviados/saida_hashes.txt"
 
 # Calcula os hashes, ordena e grava no TXT
 Get-ChildItem -Path $folder -Filter *.xml -File |
