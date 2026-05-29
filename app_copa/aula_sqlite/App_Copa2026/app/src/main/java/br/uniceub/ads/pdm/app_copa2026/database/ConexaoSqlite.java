@@ -6,12 +6,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import br.uniceub.ads.pdm.app_copa2026.utilitarios.Codificacoes;
 import br.uniceub.ads.pdm.app_copa2026.utilitarios.Codificacoes.CodigoEstadios;
 
 public class ConexaoSqlite extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "copa2026.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     private static final String CREATE_TABLE_ESTADIOS =
             "CREATE TABLE Estadios (" +
@@ -25,6 +26,18 @@ public class ConexaoSqlite extends SQLiteOpenHelper {
                     "imagem TEXT NOT NULL, " +
                     "link_maps TEXT);";
 
+    private static final String CREATE_TABLE_LINGUAS =
+            "CREATE TABLE Linguas (" +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "codigo_lingua_enum INTEGER NOT NULL, " +
+                    "nome TEXT NOT NULL, " +
+                    "mensagem_boas_vindas TEXT NOT NULL);";
+
+    private static final String CREATE_TABLE_CONFIGURACAO =
+            "CREATE TABLE Configuracao (" +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "id_lingua_selecionada INTEGER, " +
+                    "FOREIGN KEY(id_lingua_selecionada) REFERENCES Linguas(id));";
 
 
     public ConexaoSqlite(@Nullable Context context) {
@@ -40,7 +53,8 @@ public class ConexaoSqlite extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE_ESTADIOS);
-
+        db.execSQL(CREATE_TABLE_LINGUAS);
+        db.execSQL(CREATE_TABLE_CONFIGURACAO);
 
         popularDadosIniciais(db);
     }
@@ -48,10 +62,27 @@ public class ConexaoSqlite extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS Estadios");
+        db.execSQL("DROP TABLE IF EXISTS Configuracao");
+        db.execSQL("DROP TABLE IF EXISTS Linguas");
         onCreate(db);
     }
 
     private void popularDadosIniciais(SQLiteDatabase db) {
+
+        // População de Línguas baseada na Enum CodigoLingua
+        inserirLingua(db, Codificacoes.CodigoLingua.PORTUGUES, "Português", "Bem-vindo à Copa 2026!");
+        inserirLingua(db, Codificacoes.CodigoLingua.INGLES, "English", "Welcome to World Cup 2026!");
+        inserirLingua(db, Codificacoes.CodigoLingua.ESPANHOL, "Español", "¡Bienvenido a la Copa 2026!");
+        inserirLingua(db, Codificacoes.CodigoLingua.FRANCES, "Français", "Bienvenue à la Coupe 2026!");
+        inserirLingua(db, Codificacoes.CodigoLingua.ALEMAO, "Deutsch", "Willkommen zur Weltmeisterschaft 2026!");
+        inserirLingua(db, Codificacoes.CodigoLingua.RUSSO, "Русский", "Добро пожаловать na Kybok 2026!");
+        inserirLingua(db, Codificacoes.CodigoLingua.ITALIANO, "Italiano", "Benvenuti alla Coppa 2026!");
+        inserirLingua(db, Codificacoes.CodigoLingua.JAPONES, "日本語", "2026年ワールドカップへようこそ！");
+
+        // Cria a tupla global de configuração (inicialmente sem língua selecionada)
+        db.execSQL("INSERT INTO Configuracao (id_lingua_selecionada) VALUES (NULL);");
+
+
         inserirEstadio(db, CodigoEstadios.TORONTO,
                 "BMO Field", "Toronto, Canadá",
                 "Estádio localizado em Toronto, uma das sedes canadenses da Copa do Mundo FIFA 2026.",
@@ -147,6 +178,13 @@ public class ConexaoSqlite extends SQLiteOpenHelper {
                 "Estádio localizado em Inglewood, região metropolitana de Los Angeles, uma das sedes norte-americanas da Copa do Mundo FIFA 2026.",
                 "2020", 70000, "estadio16_losangeles",
                 "https://www.google.com/maps/search/?api=1&query=SoFi+Stadium+Inglewood");
+    }
+
+
+    private void inserirLingua(SQLiteDatabase db, Codificacoes.CodigoLingua codigo, String nome, String msg) {
+        String sql = "INSERT INTO Linguas (codigo_lingua_enum, nome, mensagem_boas_vindas) VALUES (" +
+                codigo.getValor() + ", '" + nome + "', '" + msg + "');";
+        db.execSQL(sql);
     }
 
     private void inserirEstadio(SQLiteDatabase db, CodigoEstadios codigo, String nome, String local,

@@ -3,7 +3,6 @@ package br.uniceub.ads.pdm.app_copa2026.utilitarios;
 public class Codificacoes {
 
     public enum CodigoEstadios {
-        // EUA
         ATLANTA(1),
         BOSTON(2),
         DALLAS(3),
@@ -23,6 +22,22 @@ public class Codificacoes {
 
         private final int valor;
         CodigoEstadios(int valor) { this.valor = valor; }
+        public int getValor() { return valor; }
+    }
+
+    public enum CodigoLingua {
+        PORTUGUES(1),
+        INGLES(2),
+        ESPANHOL(3),
+        FRANCES(4),
+        ALEMAO(5),
+        RUSSO(6),
+        ITALIANO(7),
+        JAPONES(8);
+
+
+        private final int valor;
+        CodigoLingua(int valor) { this.valor = valor; }
         public int getValor() { return valor; }
     }
 }
