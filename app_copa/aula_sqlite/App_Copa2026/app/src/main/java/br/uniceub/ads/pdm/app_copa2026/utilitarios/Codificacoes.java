@@ -14,15 +14,12 @@ public class Codificacoes {
         FILADELFIA(8),
         SAN_FRANCISCO(9),
         SEATTLE(10),
-
-        // CANADA
         TORONTO(11),
         VANCOUVER(12),
-
-        // MEXICO
         CIDADE_MEXICO(13),
         GUADALAJARA(14),
-        MONTERREY(15);
+        MONTERREY(15),
+        LOS_ANGELES(16);
 
         private final int valor;
         CodigoEstadios(int valor) { this.valor = valor; }

@@ -25,29 +25,7 @@ public class ConexaoSqlite extends SQLiteOpenHelper {
                     "imagem TEXT NOT NULL, " +
                     "link_maps TEXT);";
 
-    private static final String CREATE_TABLE_SELECAO =
-            "CREATE TABLE Selecao (" +
-                    "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "pais TEXT NOT NULL);";
 
-    private static final String CREATE_TABLE_PARTIDA =
-            "CREATE TABLE Partida (" +
-                    "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "id_selecao_1 INTEGER, " +
-                    "gols_selecao1 INTEGER DEFAULT 0, " +
-                    "id_selecao2 INTEGER, " +
-                    "gols_selecao2 INTEGER DEFAULT 0, " +
-                    "FOREIGN KEY(id_selecao_1) REFERENCES Selecao(id), " +
-                    "FOREIGN KEY(id_selecao2) REFERENCES Selecao(id));";
-
-    private static final String CREATE_TABLE_PARTIDA_ESTADIO =
-            "CREATE TABLE Partida_Estadio (" +
-                    "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "id_partida INTEGER, " +
-                    "id_estadio INTEGER, " +
-                    "data TEXT, " +
-                    "FOREIGN KEY(id_partida) REFERENCES Partida(id), " +
-                    "FOREIGN KEY(id_estadio) REFERENCES Estadios(id));";
 
     public ConexaoSqlite(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -62,55 +40,134 @@ public class ConexaoSqlite extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE_ESTADIOS);
-        db.execSQL(CREATE_TABLE_SELECAO);
-        db.execSQL(CREATE_TABLE_PARTIDA);
-        db.execSQL(CREATE_TABLE_PARTIDA_ESTADIO);
+
 
         popularDadosIniciais(db);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS Partida_Estadio");
-        db.execSQL("DROP TABLE IF EXISTS Partida");
-        db.execSQL("DROP TABLE IF EXISTS Selecao");
         db.execSQL("DROP TABLE IF EXISTS Estadios");
         onCreate(db);
     }
 
     private void popularDadosIniciais(SQLiteDatabase db) {
-        // Inserção das Seleções principais
-        db.execSQL("INSERT INTO Selecao (pais) VALUES ('EUA');");
-        db.execSQL("INSERT INTO Selecao (pais) VALUES ('Canadá');");
-        db.execSQL("INSERT INTO Selecao (pais) VALUES ('México');");
-        db.execSQL("INSERT INTO Selecao (pais) VALUES ('Brasil');");
+        inserirEstadio(db, CodigoEstadios.TORONTO,
+                "BMO Field", "Toronto, Canadá",
+                "Estádio localizado em Toronto, uma das sedes canadenses da Copa do Mundo FIFA 2026.",
+                "2007", 45000, "estadio1_toronto",
+                "https://www.google.com/maps/search/?api=1&query=BMO+Field+Toronto");
 
-        // EUA (Código 1 a 10)
-        inserirEstadio(db, CodigoEstadios.ATLANTA, "Mercedes-Benz Stadium", "Atlanta", "estadio6_atlanta");
-        inserirEstadio(db, CodigoEstadios.BOSTON, "Gillette Stadium", "Boston", "estadio7_boston");
-        inserirEstadio(db, CodigoEstadios.DALLAS, "AT&T Stadium", "Dallas", "estadio8_dallas");
-        inserirEstadio(db, CodigoEstadios.HOUSTON, "NRG Stadium", "Houston", "estadio9_houston");
-        inserirEstadio(db, CodigoEstadios.KANSAS, "Arrowhead Stadium", "Kansas City", "estadio10_kansas");
-        inserirEstadio(db, CodigoEstadios.MIAMI, "Hard Rock Stadium", "Miami", "estadio11_miami");
-        inserirEstadio(db, CodigoEstadios.NOVA_YORK, "MetLife Stadium", "Nova York", "estadio12_novayork");
-        inserirEstadio(db, CodigoEstadios.FILADELFIA, "Lincoln Financial Field", "Filadélfia", "estadio13_filadelfia");
-        inserirEstadio(db, CodigoEstadios.SAN_FRANCISCO, "Levi's Stadium", "San Francisco", "estadio14_sanfrancisco");
-        inserirEstadio(db, CodigoEstadios.SEATTLE, "Lumen Field", "Seattle", "estadio15_seattle");
+        inserirEstadio(db, CodigoEstadios.VANCOUVER,
+                "BC Place", "Vancouver, Canadá",
+                "Estádio localizado em Vancouver, uma das sedes canadenses da Copa do Mundo FIFA 2026.",
+                "1983", 54000, "estadio2_vancouver",
+                "https://www.google.com/maps/search/?api=1&query=BC+Place+Vancouver");
 
-        // CANADÁ (Código 11 a 12)
-        inserirEstadio(db, CodigoEstadios.TORONTO, "BMO Field", "Toronto", "estadio1_toronto");
-        inserirEstadio(db, CodigoEstadios.VANCOUVER, "BC Place", "Vancouver", "estadio2_vancouver");
+        inserirEstadio(db, CodigoEstadios.CIDADE_MEXICO,
+                "Estadio Azteca", "Cidade do México, México",
+                "Estádio histórico da Cidade do México e uma das sedes mexicanas da Copa do Mundo FIFA 2026.",
+                "1966", 83000, "estadio3_cidadedelmexico",
+                "https://www.google.com/maps/search/?api=1&query=Estadio+Azteca+Mexico+City");
 
-        // MÉXICO (Código 13 a 15)
-        inserirEstadio(db, CodigoEstadios.CIDADE_MEXICO, "Estádio Azteca", "Cidade do México", "estadio3_cidadedelmexico");
-        inserirEstadio(db, CodigoEstadios.GUADALAJARA, "Estádio Akron", "Guadalajara", "estadio4_guadalajara");
-        inserirEstadio(db, CodigoEstadios.MONTERREY, "Estádio BBVA", "Monterrey", "estadio5_monterrey");
+        inserirEstadio(db, CodigoEstadios.GUADALAJARA,
+                "Estadio Akron", "Guadalajara, México",
+                "Estádio localizado em Zapopan, região metropolitana de Guadalajara, uma das sedes mexicanas da Copa do Mundo FIFA 2026.",
+                "2010", 48000, "estadio4_guadalajara",
+                "https://www.google.com/maps/search/?api=1&query=Estadio+Akron+Guadalajara");
+
+        inserirEstadio(db, CodigoEstadios.MONTERREY,
+                "Estadio BBVA", "Monterrey, México",
+                "Estádio localizado em Guadalupe, região metropolitana de Monterrey, uma das sedes mexicanas da Copa do Mundo FIFA 2026.",
+                "2015", 53500, "estadio5_monterrey",
+                "https://www.google.com/maps/search/?api=1&query=Estadio+BBVA+Monterrey");
+
+        inserirEstadio(db, CodigoEstadios.ATLANTA,
+                "Mercedes-Benz Stadium", "Atlanta, Estados Unidos",
+                "Estádio localizado em Atlanta, uma das sedes norte-americanas da Copa do Mundo FIFA 2026.",
+                "2017", 75000, "estadio6_atlanta",
+                "https://www.google.com/maps/search/?api=1&query=Mercedes-Benz+Stadium+Atlanta");
+
+        inserirEstadio(db, CodigoEstadios.BOSTON,
+                "Gillette Stadium", "Boston, Estados Unidos",
+                "Estádio localizado em Foxborough, região metropolitana de Boston, uma das sedes norte-americanas da Copa do Mundo FIFA 2026.",
+                "2002", 65000, "estadio7_boston",
+                "https://www.google.com/maps/search/?api=1&query=Gillette+Stadium+Foxborough");
+
+        inserirEstadio(db, CodigoEstadios.DALLAS,
+                "AT&T Stadium", "Dallas, Estados Unidos",
+                "Estádio localizado em Arlington, região metropolitana de Dallas, uma das sedes norte-americanas da Copa do Mundo FIFA 2026.",
+                "2009", 94000, "estadio8_dallas",
+                "https://www.google.com/maps/search/?api=1&query=AT%26T+Stadium+Arlington+Texas");
+
+        inserirEstadio(db, CodigoEstadios.HOUSTON,
+                "NRG Stadium", "Houston, Estados Unidos",
+                "Estádio localizado em Houston, uma das sedes norte-americanas da Copa do Mundo FIFA 2026.",
+                "2002", 72000, "estadio9_houston",
+                "https://www.google.com/maps/search/?api=1&query=NRG+Stadium+Houston");
+
+        inserirEstadio(db, CodigoEstadios.KANSAS,
+                "Arrowhead Stadium", "Kansas City, Estados Unidos",
+                "Estádio localizado em Kansas City, uma das sedes norte-americanas da Copa do Mundo FIFA 2026.",
+                "1972", 73000, "estadio10_kansas",
+                "https://www.google.com/maps/search/?api=1&query=Arrowhead+Stadium+Kansas+City");
+
+        inserirEstadio(db, CodigoEstadios.MIAMI,
+                "Hard Rock Stadium", "Miami, Estados Unidos",
+                "Estádio localizado em Miami Gardens, região metropolitana de Miami, uma das sedes norte-americanas da Copa do Mundo FIFA 2026.",
+                "1987", 65000, "estadio11_miami",
+                "https://www.google.com/maps/search/?api=1&query=Hard+Rock+Stadium+Miami+Gardens");
+
+        inserirEstadio(db, CodigoEstadios.NOVA_YORK,
+                "MetLife Stadium", "Nova York/Nova Jersey, Estados Unidos",
+                "Estádio localizado em East Rutherford, Nova Jersey, sede da final da Copa do Mundo FIFA 2026.",
+                "2010", 82500, "estadio12_novayork",
+                "https://www.google.com/maps/search/?api=1&query=MetLife+Stadium+East+Rutherford");
+
+        inserirEstadio(db, CodigoEstadios.FILADELFIA,
+                "Lincoln Financial Field", "Filadélfia, Estados Unidos",
+                "Estádio localizado na Filadélfia, uma das sedes norte-americanas da Copa do Mundo FIFA 2026.",
+                "2003", 69000, "estadio13_filadelfia",
+                "https://www.google.com/maps/search/?api=1&query=Lincoln+Financial+Field+Philadelphia");
+
+        inserirEstadio(db, CodigoEstadios.SAN_FRANCISCO,
+                "Levi's Stadium", "San Francisco Bay Area, Estados Unidos",
+                "Estádio localizado em Santa Clara, região da Baía de San Francisco, uma das sedes norte-americanas da Copa do Mundo FIFA 2026.",
+                "2014", 71000, "estadio14_sanfrancisco",
+                "https://www.google.com/maps/search/?api=1&query=Levi%27s+Stadium+Santa+Clara");
+
+        inserirEstadio(db, CodigoEstadios.SEATTLE,
+                "Lumen Field", "Seattle, Estados Unidos",
+                "Estádio localizado em Seattle, uma das sedes norte-americanas da Copa do Mundo FIFA 2026.",
+                "2002", 69000, "estadio15_seattle",
+                "https://www.google.com/maps/search/?api=1&query=Lumen+Field+Seattle");
+
+        inserirEstadio(db, CodigoEstadios.LOS_ANGELES,
+                "SoFi Stadium", "Los Angeles, Estados Unidos",
+                "Estádio localizado em Inglewood, região metropolitana de Los Angeles, uma das sedes norte-americanas da Copa do Mundo FIFA 2026.",
+                "2020", 70000, "estadio16_losangeles",
+                "https://www.google.com/maps/search/?api=1&query=SoFi+Stadium+Inglewood");
     }
 
-    private void inserirEstadio(SQLiteDatabase db, CodigoEstadios codigo, String nome, String local, String imagem) {
-        String nomeEscape = nome.replace("'", "''");
-        String sql = "INSERT INTO Estadios (codigo_estadio_enum, nome, local, imagem) VALUES (" +
-                codigo.getValor() + ", '" + nomeEscape + "', '" + local + "', '" + imagem + "');";
+    private void inserirEstadio(SQLiteDatabase db, CodigoEstadios codigo, String nome, String local,
+                                String descricao, String dataFundacao, int capacidade, String imagem, String linkMaps) {
+
+        // Tratamento de aspas simples para nomes como Levi's Stadium
+        String nomeEscaped = nome.replace("'", "''");
+        String descEscaped = descricao.replace("'", "''");
+        String localEscaped = local.replace("'", "''");
+
+        String sql = "INSERT INTO Estadios (codigo_estadio_enum, nome, local, descricao, data_fundacao, capacidade, imagem, link_maps) " +
+                "VALUES (" +
+                codigo.getValor() + ", '" +
+                nomeEscaped + "', '" +
+                localEscaped + "', '" +
+                descEscaped + "', '" +
+                dataFundacao + "', " +
+                capacidade + ", '" +
+                imagem + "', '" +
+                linkMaps + "');";
+
         db.execSQL(sql);
     }
 }
