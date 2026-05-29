@@ -11,7 +11,7 @@ import br.uniceub.ads.pdm.app_copa2026.utilitarios.Codificacoes.CodigoEstadios;
 public class ConexaoSqlite extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "copa2026.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     private static final String CREATE_TABLE_ESTADIOS =
             "CREATE TABLE Estadios (" +
