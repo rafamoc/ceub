@@ -11,7 +11,7 @@ import br.uniceub.ads.pdm.app_copa2026.database.dml.*;
 public class ConexaoSqlite extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "copa2026.db";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
 
     public ConexaoSqlite(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#F5F5F5">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tabela de Classificação - Copa 2026"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Repetição para os 12 Grupos -->
+        <!-- Vou estruturar os IDs como table_grupo_1, table_grupo_2, etc -->
+
+        <!-- Grupo A -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="GRUPO A" android:textStyle="bold" />
+        <TableLayout android:id="@+id/table_grupo_1" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@android:color/white" android:layout_marginBottom="20dp" android:padding="4dp" android:stretchColumns="0" />
+
+        <!-- Grupo B -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="GRUPO B" android:textStyle="bold" />
+        <TableLayout android:id="@+id/table_grupo_2" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@android:color/white" android:layout_marginBottom="20dp" android:padding="4dp" android:stretchColumns="0" />
+
+        <!-- Grupo C -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="GRUPO C" android:textStyle="bold" />
+        <TableLayout android:id="@+id/table_grupo_3" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@android:color/white" android:layout_marginBottom="20dp" android:padding="4dp" android:stretchColumns="0" />
+
+        <!-- Grupo D -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="GRUPO D" android:textStyle="bold" />
+        <TableLayout android:id="@+id/table_grupo_4" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@android:color/white" android:layout_marginBottom="20dp" android:padding="4dp" android:stretchColumns="0" />
+
+        <!-- Grupo E -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="GRUPO E" android:textStyle="bold" />
+        <TableLayout android:id="@+id/table_grupo_5" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@android:color/white" android:layout_marginBottom="20dp" android:padding="4dp" android:stretchColumns="0" />
+
+        <!-- Grupo F -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="GRUPO F" android:textStyle="bold" />
+        <TableLayout android:id="@+id/table_grupo_6" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@android:color/white" android:layout_marginBottom="20dp" android:padding="4dp" android:stretchColumns="0" />
+
+        <!-- Grupo G -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="GRUPO G" android:textStyle="bold" />
+        <TableLayout android:id="@+id/table_grupo_7" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@android:color/white" android:layout_marginBottom="20dp" android:padding="4dp" android:stretchColumns="0" />
+
+        <!-- Grupo H -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="GRUPO H" android:textStyle="bold" />
+        <TableLayout android:id="@+id/table_grupo_8" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@android:color/white" android:layout_marginBottom="20dp" android:padding="4dp" android:stretchColumns="0" />
+
+        <!-- Grupo I -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="GRUPO I" android:textStyle="bold" />
+        <TableLayout android:id="@+id/table_grupo_9" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@android:color/white" android:layout_marginBottom="20dp" android:padding="4dp" android:stretchColumns="0" />
+
+        <!-- Grupo J -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="GRUPO J" android:textStyle="bold" />
+        <TableLayout android:id="@+id/table_grupo_10" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@android:color/white" android:layout_marginBottom="20dp" android:padding="4dp" android:stretchColumns="0" />
+
+        <!-- Grupo K -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="GRUPO K" android:textStyle="bold" />
+        <TableLayout android:id="@+id/table_grupo_11" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@android:color/white" android:layout_marginBottom="20dp" android:padding="4dp" android:stretchColumns="0" />
+
+        <!-- Grupo L -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="GRUPO L" android:textStyle="bold" />
+        <TableLayout android:id="@+id/table_grupo_12" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@android:color/white" android:layout_marginBottom="20dp" android:padding="4dp" android:stretchColumns="0" />
+
+    </LinearLayout>
+</ScrollView>
