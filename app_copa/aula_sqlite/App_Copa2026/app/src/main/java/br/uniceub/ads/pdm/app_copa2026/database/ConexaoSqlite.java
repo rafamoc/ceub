@@ -5,17 +5,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
-import br.uniceub.ads.pdm.app_copa2026.database.ddl.ConfiguracaoDDL;
-import br.uniceub.ads.pdm.app_copa2026.database.ddl.EstadioDDL;
-import br.uniceub.ads.pdm.app_copa2026.database.ddl.LinguaDDL;
-import br.uniceub.ads.pdm.app_copa2026.database.dml.ConfiguracaoDML;
-import br.uniceub.ads.pdm.app_copa2026.database.dml.EstadioDML;
-import br.uniceub.ads.pdm.app_copa2026.database.dml.LinguaDML;
+import br.uniceub.ads.pdm.app_copa2026.database.ddl.*;
+import br.uniceub.ads.pdm.app_copa2026.database.dml.*;
 
 public class ConexaoSqlite extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "copa2026.db";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
 
     public ConexaoSqlite(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -33,15 +29,26 @@ public class ConexaoSqlite extends SQLiteOpenHelper {
         EstadioDDL.create(db);
         LinguaDDL.create(db);
         ConfiguracaoDDL.create(db);
+        SelecaoDDL.create(db);
+        GrupoDDL.create(db);
+        PartidaDDL.create(db);
+        GrupoSelecaoDDL.create(db);
 
         // Chamadas DML
         EstadioDML.insert(db);
         LinguaDML.insert(db);
         ConfiguracaoDML.insert(db);
+        SelecaoDML.insert(db); // Novo
+        GrupoDML.insert(db);
+        GrupoSelecaoDML.insert(db);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS Grupo_Selecao");
+        db.execSQL("DROP TABLE IF EXISTS Partidas");
+        db.execSQL("DROP TABLE IF EXISTS Grupos");
+        db.execSQL("DROP TABLE IF EXISTS Selecoes");
         db.execSQL("DROP TABLE IF EXISTS Estadios");
         db.execSQL("DROP TABLE IF EXISTS Configuracao");
         db.execSQL("DROP TABLE IF EXISTS Linguas");
